@@ -42,6 +42,21 @@ exports.cssLoaders = function (options) {
       })
     }
 
+    /*
+     *这是我添加的代码，目的是在使用scss时
+     *会自动引入sass-resources-loader加载器
+     *来支持scss内变量和mixin的全局使用
+    */
+    if(loader==='sass'){
+      loaders.push({
+        loader: 'sass-resources-loader',
+          options: {
+          // it need a absolute path
+          resources: [path.resolve(__dirname, '../src/assets/css/common.scss')]
+        }
+      });
+    }
+
     // Extract CSS when that option is specified
     // (which is the case during production build)
     if (options.extract) {

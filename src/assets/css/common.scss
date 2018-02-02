@@ -1,0 +1,56 @@
+// 背景色
+$bgc:#f2f2f2;// 95%灰，通用的默认背景色
+
+// 字体颜色
+$fc-dark:#404040;// 25%黑，标题
+$fc-normal:#58595b;// 36%带些蓝的黑，多文本、普通字体
+$fc-grey:#999999;// 60%灰，次要信息
+$fc-red:#e71f10;// 红色，价格、凸显信息
+$fc-yellow:#fffbb0;//淡黄色 反白字体的高亮色
+
+// 描边颜色
+$bc:#d2d2d2;// 82%灰
+
+// 主题色
+$c-theme-active:#ee0000;// 主题色 激活状态
+$c-theme-inactive:#666666;// 主题色 未激活状态
+$c-theme-secondary:#f8a938;// 主题色 次级
+
+// 字体大小
+$fs-big:.9rem;
+$fs-normal:.75rem;
+$fs-small:.6rem;
+
+// mixin字体
+@mixin font-normal{// 通用字体
+  font-size: $fs-normal;
+  color: $fc-normal
+}
+
+//mixin flex布局
+@mixin f-between{
+  display: flex;justify-content: space-between;align-items: center;
+}
+@mixin f-around{
+  display: flex;justify-content: space-around;align-items: center;
+}
+@mixin f-start{
+  display: flex;justify-content: flex-start;align-items: center;
+}
+@mixin f-end{
+  display: flex;justify-content: flex-end;align-items: center;
+}
+@mixin f-center{
+  display: flex;justify-content: center;align-items: center;
+}
+
+//设置文本不可复制
+@mixin forbidden-copy{
+  moz-user-select: -moz-none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

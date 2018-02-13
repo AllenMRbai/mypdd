@@ -10,7 +10,13 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+        '/mypdd':{
+            target:'http://mypdd.iqcard.cn',
+            changeOrigin:true,
+            pathRewrite: {"^/mypdd" : "/mypdd"}
+        }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

@@ -6,9 +6,9 @@ import MainPage from '@/pages/MainPage'// 底部导航
 import MainHome from '@/pages/home/MainHome'// 首页容器
 import MainHomePortal from '@/pages/home/MainHomePortal'// 首页门户
 // 搜索 既分类页面
-import MainAssortment from '@/pages/assortment/MainAssortment'
+const MainAssortment = r => require.ensure([], () => r(require('@/pages/assortment/MainAssortment')), 'MainAssortment')
 // 个人中心
-import MainMe from '@/pages/me/MainMe'
+const MainMe = r => require.ensure([], () => r(require('@/pages/me/MainMe')), 'MainMe')
 
 Vue.use(Router)
 

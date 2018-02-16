@@ -8,19 +8,23 @@
           <img src="@/assets/img/activity.png" style="margin-bottom:8px;">
           <entries-container :entries='entries' :maxColumn='7'/>
       </section>
-
+      <product-cards :products='products' :isReady='isReady' @update='getProducts'/>
   </div>
 </template>
 
 <script>
 import Swiper from '@/components/Swiper'
 import EntriesContainer from '@/components/EntriesContainer'
+import ProductCards from '@/components/ProductCards'
+import {getRandomProducts} from '@/api/productApi'
+import { setTimeout } from 'timers';
 
 export default {
   name: 'MainHomePortal',
   components:{
     Swiper,
-    EntriesContainer
+    EntriesContainer,
+    ProductCards
   },
   data () {
     return {
@@ -47,12 +51,25 @@ export default {
         {icon:'static/img/11.png',title:'砍价免费拿',url:'',hot:false,tag:null},
         {icon:'static/img/12.png',title:'时尚穿搭',url:'',hot:false,tag:null},
         {icon:'static/img/13.png',title:'1分拼',url:'',hot:false,tag:null}        
-      ]
+      ],
+      products:[],
+      isReady:false
     }
   },
-  beforeCreate:function(){
-    
-    
+  methods:{
+    getProducts(page){
+      this.isReady=false;
+      getRandomProducts(page).then(res=>{
+        if(res.status==200){
+          for(let pro of res.data.data.rows){
+            this.products.push(pro);
+          }
+          this.isReady=true;
+        }
+      }).catch(e=>{
+        this.isReady=true;
+      }) 
+    }
   }
 }
 </script>

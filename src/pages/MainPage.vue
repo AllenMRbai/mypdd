@@ -1,6 +1,7 @@
 <template>
   <div>
     <router-view/>
+    <div class="nav-blank"></div>
     <!-- 导航 -->
     <nav>
       <ul class="nav-container line-top">
@@ -68,15 +69,19 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+$nav-height:2.5rem;
 nav{
   background-color: #fff;
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100vw;
-  height: 2.5rem;
+  height: $nav-height;
+  z-index: 100;
 }
-
+.nav-blank{
+  height: $nav-height;
+}
 .nav-container{
   @include f-around;
   padding-top: .2rem;

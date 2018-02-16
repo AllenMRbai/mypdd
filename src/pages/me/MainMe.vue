@@ -1,12 +1,65 @@
 <template>
   <div>
-      个人中心
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
+    <div>个人中心</div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'MainHome',
+  name: 'MainMe',
   data () {
     return {}
   }

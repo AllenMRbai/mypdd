@@ -5,10 +5,12 @@ import axios from 'axios'
  * @param {Integer} page 
  * @param {Integer} rows 
  */
-const getRandomProducts=(page,rows)=>{
+export const getRandomProducts=(page,rows)=>{
     return axios.get('/mypdd/randomProducts',{
-        page,
-        rows
+        params:{
+            page,
+            rows
+        }
     });
 }
 
@@ -19,17 +21,61 @@ const getRandomProducts=(page,rows)=>{
  * @param {Integer} page 
  * @param {Integer} rows 
  */
-const getProductsBySort=(opt1,opt2,page,rows)=>{
+export const getProductsBySort=(option)=>{
     return axios.get('/mypdd/getProductsBySort',{
-        opt1,
-        opt2,
-        page,
-        rows
+        params:{
+            opt1:option.opt1,
+            opt2:option.opt2,
+            page:option.page,
+            rows:option.rows
+        }
     });
 }
 
+/**
+ * 根据商品id获得商品详情
+ * @param {Integer} id
+ */
+export const getProductDetailById=(id)=>{
+    return axios.get('/mypdd/getProductDetailById',{
+        params:{
+            id
+        }
+    });
+}
 
-module.exports={
-    getRandomProducts,
-    getProductsBySort
+/**
+ * 根据商品id获得商品sku
+ * @param {Integer} id
+ */
+export const getSkuById=(id)=>{
+    return axios.get('/mypdd/getSkuById',{
+        params:{
+            id
+        }
+    });
+}
+
+/**
+ * 根据商品id获得商品评论
+ * @param {Integer} id
+ */
+export const getCommentsById=(id)=>{
+    return axios.get('/mypdd/getCommentsById',{
+        params:{
+            id
+        }
+    });
+}
+
+/**
+ * 根据商品id获得商品拼单信息
+ * @param {Integer} id
+ */
+export const getPingDanById=(id)=>{
+    return axios.get('/mypdd/getPingDanById',{
+        params:{
+            id
+        }
+    });
 }

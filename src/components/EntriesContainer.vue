@@ -78,6 +78,12 @@ export default {
         isTouching=false,//是否正在触摸
         lastTwoFrame=[],//松手前的两帧对应的类Touch对象，用于计算初速度[0]是最后一帧，[1]是倒数第二帧
         position=getPositionDelta();
+    
+    let wrapScrollWith=0-minTransform,
+        barBox=document.getElementsByClassName('bar-box')[0],
+        bar=document.getElementsByClassName('bar')[0],
+        barScrollWith=barBox.clientWidth-bar.clientWidth,
+        barRate=barScrollWith/wrapScrollWith;
 
     //监听Box的touch事件
     Box.addEventListener('touchstart',handleStart);
@@ -148,6 +154,7 @@ export default {
         let nowPosition=position+delta,
             resistancePosition=addResistance([minTransform,0],nowPosition)
         wrap.style.transform=`translateX(${resistancePosition}px)`;
+        bar.style.transform=`translateX(${-resistancePosition*barRate}px)`;
     }
 
     /**
@@ -189,7 +196,11 @@ export default {
         }
     }
 
-    //
+
+    /**
+     * 松手后的动画，继续滑行会回弹
+     * @argument {Number} V0 松手后的初速度
+     */
     function doSpringback(V0){
       let nowPosition=getPositionDelta();
       let during=16,
@@ -226,6 +237,7 @@ export default {
         current++;
         var to = Tween.Sine.easeOut(current, begin, change, during);
         wrap.style.transform=`translateX(${to}px)`;
+        bar.style.transform=`translateX(${-to*barRate}px)`;
         if (current <= during && !isTouching){
           raf(step);
         } else{
@@ -245,6 +257,7 @@ export default {
     width: 100%;
 }
 .list-slide-box{
+    @include forbidden-copy;
     width: 100%;
     overflow: hidden;
     padding: .3rem 0;

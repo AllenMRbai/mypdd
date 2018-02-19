@@ -9,8 +9,8 @@ Vue.config.productionTip = false
 
 Vue.use(VueLazyload, {
   preLoad: 1.3,
-  error: 'static/img/error.png',
-  loading: 'static/img/loading.png',
+  error: '/static/img/error.png',
+  loading: '/static/img/loading.png',
   attempt: 1,
   observerOptions:{ rootMargin: '0px', threshold: 0.1}
 })

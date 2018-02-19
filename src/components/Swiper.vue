@@ -77,19 +77,41 @@ export default {
   watch:{
     banners(newValue){
       if(newValue.length>0){
-        this.adjustInitBannerPosition();
-        this.initeSwipe();
-        this.turnOnAutoSlide();
+        this.init();
       }
     }
   },
+  mounted(){
+    this.init();
+  },
+  activated(){
+    this.init();
+  },
+  deactivated (){
+    this.turnOffAutoSlide();
+  },
+  beforeDestroy() {
+    this.turnOffAutoSlide();
+  },
   methods: {
+    init(){
+      this.focus=0;
+      this.springbacking=false;
+      this.turnOffAutoSlide();
+      this.adjustInitBannerPosition();
+      this.unbindListener();
+      this.bindListener();
+      this.turnOnAutoSlide();
+    },
     //为了实现无限滚动，最后一张banner要放到第一张banner的前面。因此，初始化Swipe前需要先调整下位置
     adjustInitBannerPosition() {
       let banners = this.banners,
         len = banners.length,
         i = 0;
-        if(len===1)return;
+        if(len===1){
+          return;
+        }
+        this.showBanners=[];
       for (; i < len; i++) {
         if (i === len - 1) {
           this.showBanners.unshift(banners[i]);
@@ -98,41 +120,43 @@ export default {
         this.showBanners.push(banners[i]);
       }
     },
-    initeSwipe(){
-      if(this.banners.length===1)return;
-
-      let liderBox = document.getElementById("lider-box"),
-        self = this
-
+    bindListener(){
+      if(this.banners.length===1){
+        return;
+      }
+      let liderBox = document.getElementById("lider-box")
       //监听liderBox的touch事件
-      liderBox.addEventListener("touchstart", handleStart);
-      liderBox.addEventListener("touchend", handleEnd);
-      liderBox.addEventListener("touchmove", handleMove);
+      liderBox.addEventListener("touchstart", this.handleStart);
+      liderBox.addEventListener("touchend", this.handleEnd);
+      liderBox.addEventListener("touchmove", this.handleMove);
 
-      //touch事件的钩子
-      function handleStart(evt) {
-        evt.preventDefault();
-        self.touch = evt.touches[0];
-        self.turnOffAutoSlide();
-      }
-      function handleMove(evt) {
-        evt.preventDefault();
-        let ths = evt.changedTouches;
-        for (let th of ths) {
-          if (th.identifier === self.touch.identifier) {
-            if (self.springbacking) return; //正在回弹动画的过程中，不能操控banner
-            self.doSlide(self.touch, th);
-          }
+    },
+    unbindListener(){
+      let liderBox = document.getElementById("lider-box")
+      liderBox.removeEventListener("touchstart", this.handleStart);
+      liderBox.removeEventListener("touchend", this.handleEnd);
+      liderBox.removeEventListener("touchmove", this.handleMove);
+    },
+    //touch事件的钩子
+    handleStart(evt) {
+      this.touch = evt.touches[0];
+      this.turnOffAutoSlide();
+    },
+    handleMove(evt) {
+      let ths = evt.changedTouches;
+      for (let th of ths) {
+        if (th.identifier === this.touch.identifier) {
+          if (this.springbacking) return; //正在回弹动画的过程中，不能操控banner
+          this.doSlide(this.touch, th);
         }
       }
-      function handleEnd(evt) {
-        evt.preventDefault();
-        if (evt.touches[0]) {
-          self.touch = evt.touches[0];
-        } else {
-          if (self.springbacking) return; //正在回弹动画的过程中，不能操控banner
-          self.doSpringback();
-        }
+    },
+    handleEnd(evt) {
+      if (evt.touches[0]) {
+        this.touch = evt.touches[0];
+      } else {
+        if (this.springbacking) return; //正在回弹动画的过程中，不能操控banner
+        this.doSpringback();
       }
     },
     /**
@@ -258,18 +282,15 @@ export default {
         }
       });
     }
-  },
-  beforeDestroy() {
-    //组件销毁时，关闭setInterval
-    this.turnOffAutoSlide();
   }
+  
 };
 </script>
 
 <style lang="scss" scoped>
 .lider-box {
-  width: 100%;
   overflow: hidden;
+  width: 100%;
   position: relative;
   .lider-wrap {
     position: relative;

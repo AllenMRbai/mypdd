@@ -1,7 +1,7 @@
 <template>
     <div class="to-top-btn" id="to-top-btn" @click="goToTop">
         <img src="/static/img/arrow-toTop.png" alt="回到顶部按钮">
-        <p>顶部</p>
+        <p class="nocopy">顶部</p>
     </div>
 </template>
 
@@ -43,13 +43,25 @@ export default {
     },
     goToTop(){
         window.scrollTo(0,0);
+    },
+    bindListener(){
+      window.addEventListener('scroll',this.scrollHandler);
+    },
+    unbindListener(){
+      window.removeEventListener('scroll',this.scrollHandler);
     }
   },
-  mounted() {
-      window.addEventListener('scroll',this.scrollHandler);
+  created() {
+    this.bindListener();
+  },
+  activated(){
+    this.bindListener();
+  },
+  deactivated(){
+    this.unbindListener();
   },
   destroyed(){
-      window.removeEventListener('scroll',this.scrollHandler);
+    this.unbindListener();
   }
 };
 </script>

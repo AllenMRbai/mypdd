@@ -1,7 +1,8 @@
 <template>
   <div>
-    <router-view/>
-    <div class="nav-blank"></div>
+    <!-- <keep-alive> -->
+      <router-view/>
+    <!-- </keep-alive> -->
     <!-- 导航 -->
     <nav>
       <ul class="nav-container line-top">
@@ -78,9 +79,6 @@ nav{
   width: 100vw;
   height: $nav-height;
   z-index: 100;
-}
-.nav-blank{
-  height: $nav-height;
 }
 .nav-container{
   @include f-around;

@@ -9,8 +9,11 @@
         <div class="gradient-block"></div>
       </nav>
       <div class="blank-row"></div>
-      <router-view/>
+
+        <router-view/>
+      
       <to-top/>
+      <div style="height:2.5rem;"></div>
   </div>
 </template>
 

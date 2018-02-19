@@ -71,6 +71,44 @@ export default {
       }) 
     }
   }
+  // beforeCreate(){
+  //   console.log('首页门户beforeCreate')
+  // },
+  // created(){
+  //   console.log('首页门户created')
+  // },
+  // beforeMount(){
+  //   console.log('首页门户beforeMount')
+  // },
+  // mounted(){
+  //   console.log('首页门户mounted')
+  // },
+  // beforeUpdate(){
+  //   console.log('首页门户beforeUpdate')
+  // },
+  // updated(){
+  //   console.log('首页门户updated')
+  // },
+  // activated(){
+  //   console.log('首页门户activated')
+  // },
+  // deactivated(){
+  //   console.log('首页门户deactivated')
+  // },
+  // beforeDestroy(){
+  //   console.log('首页门户beforeDestroy')
+  // },
+  // destroyed(){
+  //   console.log('首页门户destroyed')
+  // },
+  // beforeRouteEnter: (to, from, next) => {
+  //   console.log('首页门户beforeRouteEnter')
+  //   next()
+  // },
+  // beforeRouteLeave: (to, from, next) => {
+  //   console.log('首页门户beforeRouteLeave')
+  //   next()
+  // }
 }
 </script>
 

@@ -39,14 +39,14 @@ export default {
   components: {
     ProductCards
   },
-  methods: {},
   watch: {
-    $route() {
-      this.products.splice(0, this.products.length);
-      this.isReady = false;
-      this.categoryTwos.splice(0, this.categoryTwos.length);
-
-      this.getCategoryTwos();
+    $route(to,from) {
+      if(to.name==='MainHomeCat' && from.name==='MainHomeCat'){
+        this.products=[];
+        this.isReady = false;
+        this.categoryTwos=[];
+        this.getCategoryTwos();
+      }
     }
   },
   methods: {
@@ -77,10 +77,20 @@ export default {
         }
       });
     }
-  },
-  mounted() {
-    this.getCategoryTwos();
   }
+  // created(){
+  //   console.log('首页分类created')
+  // },
+  // mounted() {
+  //   this.getCategoryTwos();
+  //   console.log('首页分类mounted')
+  // },
+  // updated(){
+  //   console.log('首页分类updated')
+  // },
+  // activated(){
+  //   console.log('首页分类activated')
+  // }
 };
 </script>
 

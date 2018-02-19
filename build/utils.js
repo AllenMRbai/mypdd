@@ -33,6 +33,15 @@ exports.cssLoaders = function (options) {
   function generateLoaders (loader, loaderOptions) {
     const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
 
+    /**
+     * 解决@import的外部css文件的url问题
+     */
+    if(loader==='sass'){
+      loaders.push({
+        loader: 'resolve-url-loader'
+      });
+    }
+    
     if (loader) {
       loaders.push({
         loader: loader + '-loader',
@@ -43,16 +52,14 @@ exports.cssLoaders = function (options) {
     }
 
     /*
-     *这是我添加的代码，目的是在使用scss时
-     *会自动引入sass-resources-loader加载器
-     *来支持scss内变量和mixin的全局使用
+     *在每个vue文件内自动引入resources内的scss文件
     */
     if(loader==='sass'){
       loaders.push({
         loader: 'sass-resources-loader',
-          options: {
+        options: {
           // it need a absolute path
-          resources: [path.resolve(__dirname, '../src/assets/css/common.scss')]
+          resources: [path.resolve(__dirname, '../src/assets/css/common.scss'),path.resolve(__dirname, '../src/assets/font/icon/iconfont.css')]
         }
       });
     }

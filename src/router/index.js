@@ -12,11 +12,27 @@ const MainAssortment = r => require.ensure([], () => r(require('@/pages/assortme
 const MainMe = r => require.ensure([], () => r(require('@/pages/me/MainMe')), 'MainMe')
 // 商品详情页
 const ProductDetail = r => require.ensure([], () => r(require('@/pages/ProductDetail')), 'ProductDetail')
+// 订单中心
+const OrderPage = r => require.ensure([], () => r(require('@/pages/orders/OrderPage')), 'OrderPage')
+const AllOrders = r => require.ensure([], () => r(require('@/pages/orders/AllOrders')), 'AllOrders')
+const PendingPayment = r => require.ensure([], () => r(require('@/pages/orders/PendingPayment')), 'PendingPayment')
+const PendingShipment = r => require.ensure([], () => r(require('@/pages/orders/PendingShipment')), 'PendingShipment')
+const Shipped = r => require.ensure([], () => r(require('@/pages/orders/Shipped')), 'Shipped')
 
 Vue.use(Router)
 
 export default new Router({
   mode: 'history',
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+        return savedPosition;
+    } else {
+      return {
+        x: 0,
+        y: 0
+      }
+    }
+  },
   routes: [
     {
       path: '/',
@@ -29,7 +45,8 @@ export default new Router({
             {
               path: '',
               name: 'MainHomePortal', // 首页门户
-              component: MainHomePortal
+              component: MainHomePortal,
+              meta: { recordScroll: true }
             },
             {
               path:'MainHomeCat/:optId1',
@@ -47,7 +64,6 @@ export default new Router({
           path: 'me',
           name: 'MainMe', // 个人中心
           component: MainMe
-          // meta: { requiresAuth: true }
         }
       ]
     },
@@ -55,6 +71,37 @@ export default new Router({
       path: '/productDetail/:id',
       name: 'ProductDetail',//商品详情
       component: ProductDetail
+    },
+    //订单 4页面
+    {
+      path:'/orders',
+      component:OrderPage,
+      children:[
+        {
+          path:'allOrders',
+          name:'AllOrders',//所有订单
+          component:AllOrders,
+          //meta: { requiresAuth: true }
+        },
+        {
+          path:'pendingPayment',
+          name:'PendingPayment',//待付款
+          component:PendingPayment,
+          //meta: { requiresAuth: true }
+        },
+        {
+          path:'pendingShipment',
+          name:'PendingShipment',//待发货
+          component:PendingShipment,
+          //meta: { requiresAuth: true }
+        },
+        {
+          path:'shipped',
+          name:'Shipped',//已发货
+          component:Shipped,
+         // meta: { requiresAuth: true }
+        },
+      ]
     }
   ]
 })

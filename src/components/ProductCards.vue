@@ -3,7 +3,7 @@
     <ul class="products-box">
       <router-link tag="li" class="card" v-for="(product,index) in products" :key="index" :to='{name:"ProductDetail",params:{id:product.goodsId}}'>
         <div class="product-pic">
-          <img v-lazy="product.thumbUrl" alt="产品图片">
+          <img v-lazy="product.thumbUrl">
         </div>
         <div>
           <p class="product-name">
@@ -49,7 +49,8 @@ export default {
   },
   data () {
     return {
-      page:1
+      page:1,
+      componentSign:''//组件标记，标记该组件是属于那个页面的
     }
   },
   methods:{
@@ -57,27 +58,68 @@ export default {
       if(this.immediateCheck){
         this.$emit('update',this.page++);
       }
-    }
-  },
-  watch:{
-    $route(){
-      this.immeidateTrig();
-      this.page=1;
-    }
-  },
-  mounted(){
-    let self=this;
-    this.immeidateTrig();
-    window.addEventListener('scroll',scrollHandler);
-    function scrollHandler(e){
+    },
+    scrollHandler(e){
       let windowHight=document.documentElement.clientHeight,
           scrollHight=document.body.scrollHeight,
           nowHight=window.scrollY;
-      if(nowHight+windowHight+self.threshold>=scrollHight){
-        self.$emit('update',self.page++);
+
+      if(nowHight+windowHight+this.threshold>=scrollHight){
+        this.$emit('update',this.page++);
+        //console.log('产品卡 '+this.componentSign+'发射事件')
+      }
+    },
+    bindListener(){
+      window.addEventListener('scroll',this.scrollHandler);
+    },
+    unbindListener(){
+      window.removeEventListener('scroll',this.scrollHandler);
+    }
+  },
+  watch:{
+    $route(to,from){
+      if(to.name===from.name && to.name===this.componentSign){
+        //console.log('产品卡route'+this.componentSign,to.params.id)
+        this.unbindListener();
+        this.immeidateTrig();
+        this.bindListener();
+        this.page=1;
       }
     }
+  },
+  created(){
+    //console.log('产品卡created '+this.componentSign)
+    if(!this.componentSign){
+      this.componentSign=this.$route.name
+    }
+    this.immeidateTrig();
+    this.unbindListener();
+    this.bindListener();
+  },
+  activated(){
+    //console.log('产品卡activated '+this.componentSign)
+    this.unbindListener();
+    this.bindListener();
+  },
+  deactivated(){
+    //console.log('产品卡deactivated '+this.componentSign)
+    this.unbindListener();
+  },
+  destroyed(){
+    //console.log('产品卡destroyed '+this.componentSign)
+    this.unbindListener();
   }
+  // beforeRouteEnter (to, from, next) {
+  //   console.log('产品卡beforeRouteEnter '+this.componentSign)
+  // },
+  // beforeRouteUpdate (to, from, next) {
+  //   let self=this;
+  //   console.log('产品卡beforeRouteUpdate '+this.componentSign,self)
+  // },
+  // beforeRouteLeave  (to, from, next) {
+  //   let self=this;
+  //   console.log('产品卡beforeRouteLeave '+this.componentSign,self)
+  // }
 }
 </script>
 
